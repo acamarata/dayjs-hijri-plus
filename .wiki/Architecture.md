@@ -10,7 +10,7 @@ This separation is deliberate. Calendar algorithms are complex, have known edge 
 
 ```
 src/
-  index.ts   Plugin entry — registers methods on dayjsClass and dayjsFactory
+  index.ts   Plugin entry: registers methods on dayjsClass and dayjsFactory
   types.ts   Type definitions and module augmentation for dayjs
 ```
 
@@ -20,8 +20,8 @@ The plugin follows the standard Day.js `PluginFunc` signature:
 const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => { ... };
 ```
 
-- `dayjsClass.prototype.*` — instance methods (`.toHijri`, `.formatHijri`, etc.)
-- `(dayjsFactory as any).fromHijri` — static method added to the factory function
+- `dayjsClass.prototype.*`: instance methods (`.toHijri`, `.formatHijri`, etc.)
+- `(dayjsFactory as any).fromHijri`: static method added to the factory function
 
 ## Peer Dependencies
 
@@ -29,7 +29,7 @@ Both `dayjs` and `hijri-core` are peer dependencies. This means:
 
 1. The host application controls which version of `dayjs` is used. No version conflict possible.
 2. The host application controls which version of `hijri-core` is used. If hijri-core ships updated tables covering new years, the plugin benefits automatically.
-3. The plugin itself has zero runtime dependencies in `node_modules` — only peer resolutions.
+3. The plugin itself has zero runtime dependencies in `node_modules`, only peer resolutions.
 
 ## Format Token Resolution
 
@@ -49,7 +49,7 @@ This means Hijri tokens and Gregorian tokens can coexist in the same format stri
 
 ## Weekday Alignment
 
-Day.js `.day()` returns `0` for Sunday through `6` for Saturday — the same convention as `Date.prototype.getDay()`.
+Day.js `.day()` returns `0` for Sunday through `6` for Saturday, the same convention as `Date.prototype.getDay()`.
 
 The weekday arrays exported by hijri-core (`hwLong`, `hwShort`, `hwNumeric`) use the same index layout: index `0` = Sunday, index `6` = Saturday. So `hwLong[this.day()]` always yields the correct weekday name with no offset arithmetic.
 
@@ -83,7 +83,7 @@ interface CalendarEngine {
 
 ## Build
 
-The package ships a dual CJS/ESM build via tsup. Both `dayjs` and `hijri-core` are marked as `external`, so they are never bundled — consumers provide them via peer dependency resolution.
+The package ships a dual CJS/ESM build via tsup. Both `dayjs` and `hijri-core` are marked as `external`, so they are never bundled. Consumers provide them via peer dependency resolution.
 
 Output:
 

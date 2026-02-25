@@ -1,10 +1,10 @@
 # dayjs-hijri-plus
 
-[![npm version](https://img.shields.io/npm/v/dayjs-hijri-plus)](https://www.npmjs.com/package/dayjs-hijri-plus)
+[![npm version](https://img.shields.io/npm/v/dayjs-hijri-plus.svg)](https://www.npmjs.com/package/dayjs-hijri-plus)
 [![CI](https://github.com/acamarata/dayjs-hijri-plus/actions/workflows/ci.yml/badge.svg)](https://github.com/acamarata/dayjs-hijri-plus/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A Day.js plugin that adds Hijri calendar support. Converts Gregorian dates to and from Hijri, provides Hijri-aware formatting, and delegates all calendar logic to [hijri-core](https://github.com/acamarata/hijri-core) — keeping this package thin and testable.
+A Day.js plugin that adds Hijri calendar support. Converts Gregorian dates to and from Hijri, provides Hijri-aware formatting, and delegates all calendar logic to [hijri-core](https://github.com/acamarata/hijri-core). Keeps this package thin and testable.
 
 Supports Umm al-Qura (UAQ) and FCNA/ISNA calendars out of the box. Custom calendar engines can be registered at runtime.
 
@@ -63,7 +63,7 @@ Convert the Day.js date to a Hijri date object.
 | --- | --- | --- |
 | `opts` | `ConversionOptions` | Optional. `{ calendar: 'uaq' \| 'fcna' \| string }` |
 
-Returns `HijriDate | null`. Returns `null` if the date is outside the supported range (approximately 1900-2077 CE for UAQ).
+Returns `HijriDate | null`. Returns `null` if the date is outside the supported range (UAQ: AH 1318-1500 / 1900-2076 CE).
 
 ```ts
 dayjs('2023-03-23').toHijri();
@@ -94,7 +94,7 @@ Format the date using a mix of Hijri tokens and standard Day.js tokens.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
-| `formatStr` | `string` | Format string — see token table below |
+| `formatStr` | `string` | Format string. See token table below. |
 | `opts` | `ConversionOptions` | Optional calendar selection |
 
 Returns `string`. Returns an empty string if the date is out of range.
@@ -142,8 +142,8 @@ Standard Day.js tokens pass through untouched. Square-bracket escaping (`[litera
 
 Two calendars ship with hijri-core:
 
-- **`uaq`** (default) — Umm al-Qura, the official calendar of Saudi Arabia. Table-based, covers approximately 1318-1500 AH (1900-2077 CE).
-- **`fcna`** — Fiqh Council of North America calendar. Uses an astronomical calculation with fixed criteria, independent of moon sighting.
+- **`uaq`** (default): Umm al-Qura, the official calendar of Saudi Arabia. Table-based, covers 1318-1500 AH (1900-2076 CE).
+- **`fcna`**: Fiqh Council of North America calendar. Uses an astronomical calculation with fixed criteria, independent of moon sighting.
 
 Select a calendar by passing `{ calendar: 'fcna' }` to any method. The default is `'uaq'` when no option is provided.
 
@@ -180,10 +180,10 @@ Full API reference, architecture notes, and calendar system comparisons are on t
 
 ## Related
 
-- [hijri-core](https://github.com/acamarata/hijri-core) — the zero-dependency Hijri calendar engine this plugin wraps
-- [luxon-hijri](https://github.com/acamarata/luxon-hijri) — the same Hijri conversion for Luxon users
-- [pray-calc](https://github.com/acamarata/pray-calc) — Islamic prayer time calculation
-- [nrel-spa](https://github.com/acamarata/nrel-spa) — NREL Solar Position Algorithm in pure JavaScript
+- [hijri-core](https://github.com/acamarata/hijri-core): zero-dependency Hijri calendar engine this plugin wraps
+- [luxon-hijri](https://github.com/acamarata/luxon-hijri): the same Hijri conversion for Luxon users
+- [pray-calc](https://github.com/acamarata/pray-calc): Islamic prayer time calculation
+- [nrel-spa](https://github.com/acamarata/nrel-spa): NREL Solar Position Algorithm in pure JavaScript
 
 ## License
 

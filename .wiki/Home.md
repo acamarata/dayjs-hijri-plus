@@ -28,8 +28,8 @@ dayjs.fromHijri(1444, 10, 1).format('YYYY-MM-DD');
 
 ## Contents
 
-- [API Reference](API-Reference) — all methods, parameters, return types
-- [Architecture](Architecture) — design decisions, delegation model, format token resolution
+- [API Reference](API-Reference): all methods, parameters, return types
+- [Architecture](Architecture): design decisions, delegation model, format token resolution
 
 ---
 

@@ -44,17 +44,14 @@ test('toHijri: 2024-07-07 -> 1 Muharram 1446', () => {
   assert.deepEqual(h, { hy: 1446, hm: 1, hd: 1 });
 });
 
-test('fromHijri: 1444/9/1 -> 2023-03-23 (UTC)', () => {
+test('fromHijri: 1444/9/1 -> 2023-03-23', () => {
   const d = dayjs.fromHijri(1444, 9, 1);
-  // toGregorian returns midnight UTC; compare using UTC accessors to be timezone-safe.
-  const iso = d.toDate().toISOString();
-  assert.ok(iso.startsWith('2023-03-23'), `Expected 2023-03-23, got ${iso}`);
+  assert.equal(d.format('YYYY-MM-DD'), '2023-03-23');
 });
 
-test('fromHijri: 1446/1/1 -> 2024-07-07 (UTC)', () => {
+test('fromHijri: 1446/1/1 -> 2024-07-07', () => {
   const d = dayjs.fromHijri(1446, 1, 1);
-  const iso = d.toDate().toISOString();
-  assert.ok(iso.startsWith('2024-07-07'), `Expected 2024-07-07, got ${iso}`);
+  assert.equal(d.format('YYYY-MM-DD'), '2024-07-07');
 });
 
 test('hijriYear/hijriMonth/hijriDay accessors on 1 Ramadan 1444', () => {

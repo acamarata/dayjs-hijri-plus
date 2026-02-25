@@ -9,5 +9,5 @@ export type CalendarSystem = string;
  * so callers can switch between 'uaq' (default) and 'fcna'.
  */
 export interface HijriPluginOptions extends ConversionOptions {
-  // calendar?: string  (inherited — 'uaq' | 'fcna' | any registered calendar id)
+  // calendar?: string  (inherited: 'uaq' | 'fcna' | any registered calendar id)
 }

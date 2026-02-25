@@ -37,14 +37,11 @@ declare module 'dayjs' {
 }
 
 // Augment the dayjs factory to expose the fromHijri static method.
+// Using the function declaration form (same pattern as dayjs timezone plugin)
+// because dayjs does not export an IStatic interface for module augmentation.
+// import('dayjs').Dayjs is used explicitly to satisfy the tsup DTS emitter.
 declare module 'dayjs' {
-  interface IStatic {
-    /**
-     * Construct a Day.js instance from a Hijri date.
-     * Throws if the Hijri date is invalid or outside the supported range.
-     */
-    fromHijri(hy: number, hm: number, hd: number, opts?: ConversionOptions): import('dayjs').Dayjs;
-  }
+  function fromHijri(hy: number, hm: number, hd: number, opts?: ConversionOptions): import('dayjs').Dayjs;
 }
 
 // Hijri-specific format tokens, ordered longest-first to prevent partial matches.
@@ -58,11 +55,11 @@ const HIJRI_TOKEN_RE = /iYYYY|iYY|iMMMM|iMMM|iMM|iM|iDD|iD|iEEEE|iEEE|iE|ioooo|i
  *
  * Day.js uses `[...]` for literal text. A `]` inside such a section would
  * close it prematurely, so we split on `]` and re-join with `][` (which
- * closes the current literal section, outputs a raw `]` — Day.js passes
- * unrecognised characters through untouched — then opens a new one).
+ * closes the current literal section, outputs a raw `]` (Day.js passes
+ * unrecognised characters through untouched), then opens a new one.
  */
 function lit(value: string): string {
-  return '[' + value.split(']').join('][') + ']';
+  return '[' + value.split(']').join(']][') + ']';
 }
 
 const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
@@ -146,7 +143,13 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
     if (!greg) {
       throw new Error(`Invalid or out-of-range Hijri date: ${hy}/${hm}/${hd}`);
     }
-    return dayjsFactory(greg);
+    // Construct from ISO date string to avoid timezone offset issues.
+    // dayjsFactory(Date) interprets the Date in local time; a UTC-midnight Date
+    // in western timezones would resolve to the previous local day.
+    const y = greg.getUTCFullYear();
+    const mo = String(greg.getUTCMonth() + 1).padStart(2, '0');
+    const dy = String(greg.getUTCDate()).padStart(2, '0');
+    return dayjsFactory(`${y}-${mo}-${dy}`);
   };
 };
 
@@ -154,6 +157,7 @@ export default plugin;
 
 // Re-export hijri-core types for consumers who import from dayjs-hijri-plus.
 export type { HijriDate, ConversionOptions, CalendarSystem } from './types';
+export type { CalendarEngine } from 'hijri-core';
 
 // Re-export the registry API so callers can register custom calendar engines
 // without adding hijri-core as a direct dependency.

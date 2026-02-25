@@ -41,10 +41,9 @@ test('toHijri (CJS): 2024-07-07 -> 1 Muharram 1446', () => {
   assert.deepEqual(h, { hy: 1446, hm: 1, hd: 1 });
 });
 
-test('fromHijri (CJS): 1444/9/1 -> 2023-03-23 (UTC)', () => {
+test('fromHijri (CJS): 1444/9/1 -> 2023-03-23', () => {
   const d = dayjs.fromHijri(1444, 9, 1);
-  const iso = d.toDate().toISOString();
-  assert.ok(iso.startsWith('2023-03-23'), `Expected 2023-03-23, got ${iso}`);
+  assert.equal(d.format('YYYY-MM-DD'), '2023-03-23');
 });
 
 test('formatHijri (CJS): iYYYY-iMM-iDD', () => {
