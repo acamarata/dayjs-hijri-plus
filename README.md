@@ -174,6 +174,12 @@ const opts: ConversionOptions = { calendar: 'fcna' };
 
 No `@types` package is needed.
 
+## Architecture
+
+A thin plugin wrapper over [hijri-core](https://github.com/acamarata/hijri-core). The plugin augments the Day.js prototype with Hijri methods, each delegating to the registered calendar engine. Zero global state — calendar selection is passed per call.
+
+For more detail see the [Architecture wiki page](https://github.com/acamarata/dayjs-hijri-plus/wiki/Architecture).
+
 ## Documentation
 
 Full API reference, architecture notes, and calendar system comparisons are on the [GitHub Wiki](https://github.com/acamarata/dayjs-hijri-plus/wiki).
