@@ -20,14 +20,15 @@ Call `dayjs.extend` once, globally. After that, every Day.js instance has the pl
 Convert the Day.js date to a Hijri date.
 
 **Signature:**
+
 ```ts
 toHijri(opts?: ConversionOptions): HijriDate | null
 ```
 
 **Parameters:**
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
+| Name            | Type     | Default | Description                                      |
+| --------------- | -------- | ------- | ------------------------------------------------ |
 | `opts.calendar` | `string` | `'uaq'` | Calendar engine id. Built-ins: `'uaq'`, `'fcna'` |
 
 **Returns:** `{ hy: number, hm: number, hd: number }` or `null` if the date is outside the table range.
@@ -47,6 +48,7 @@ dayjs('2023-03-23').toHijri({ calendar: 'fcna' });
 Check whether the date has a valid Hijri representation in the supported range.
 
 **Signature:**
+
 ```ts
 isValidHijri(opts?: ConversionOptions): boolean
 ```
@@ -58,6 +60,7 @@ Returns `false` for dates outside the coverage range, `true` otherwise.
 ### `.hijriYear(opts?)`
 
 **Signature:**
+
 ```ts
 hijriYear(opts?: ConversionOptions): number | null
 ```
@@ -69,6 +72,7 @@ Returns the Hijri year, or `null` if out of range.
 ### `.hijriMonth(opts?)`
 
 **Signature:**
+
 ```ts
 hijriMonth(opts?: ConversionOptions): number | null
 ```
@@ -80,6 +84,7 @@ Returns the Hijri month (1-12), or `null` if out of range.
 ### `.hijriDay(opts?)`
 
 **Signature:**
+
 ```ts
 hijriDay(opts?: ConversionOptions): number | null
 ```
@@ -93,36 +98,37 @@ Returns the Hijri day (1-30), or `null` if out of range.
 Format the date using a mix of Hijri-specific tokens and standard Day.js tokens.
 
 **Signature:**
+
 ```ts
 formatHijri(formatStr: string, opts?: ConversionOptions): string
 ```
 
 **Parameters:**
 
-| Name | Type | Description |
-| --- | --- | --- |
-| `formatStr` | `string` | Format string containing Hijri tokens, Day.js tokens, or both |
-| `opts` | `ConversionOptions` | Optional calendar selection |
+| Name        | Type                | Description                                                   |
+| ----------- | ------------------- | ------------------------------------------------------------- |
+| `formatStr` | `string`            | Format string containing Hijri tokens, Day.js tokens, or both |
+| `opts`      | `ConversionOptions` | Optional calendar selection                                   |
 
 Returns an empty string if the date is outside the supported range.
 
 **Hijri tokens:**
 
-| Token | Example | Description |
-| --- | --- | --- |
-| `iYYYY` | `1444` | 4-digit Hijri year |
-| `iYY` | `44` | 2-digit Hijri year |
-| `iMMMM` | `Ramadan` | Full month name |
-| `iMMM` | `Ramadan` | Medium month name |
-| `iMM` | `09` | Zero-padded month number |
-| `iM` | `9` | Month number |
-| `iDD` | `01` | Zero-padded day |
-| `iD` | `1` | Day number |
-| `iEEEE` | `Yawm al-Khamis` | Full weekday name |
-| `iEEE` | `Kham` | Short weekday name |
-| `iE` | `5` | Weekday number (1=Sun ... 7=Sat) |
-| `ioooo` | `AH` | Era |
-| `iooo` | `AH` | Era (same as ioooo) |
+| Token   | Example          | Description                      |
+| ------- | ---------------- | -------------------------------- |
+| `iYYYY` | `1444`           | 4-digit Hijri year               |
+| `iYY`   | `44`             | 2-digit Hijri year               |
+| `iMMMM` | `Ramadan`        | Full month name                  |
+| `iMMM`  | `Ramadan`        | Medium month name                |
+| `iMM`   | `09`             | Zero-padded month number         |
+| `iM`    | `9`              | Month number                     |
+| `iDD`   | `01`             | Zero-padded day                  |
+| `iD`    | `1`              | Day number                       |
+| `iEEEE` | `Yawm al-Khamis` | Full weekday name                |
+| `iEEE`  | `Kham`           | Short weekday name               |
+| `iE`    | `5`              | Weekday number (1=Sun ... 7=Sat) |
+| `ioooo` | `AH`             | Era                              |
+| `iooo`  | `AH`             | Era (same as ioooo)              |
 
 Standard Day.js tokens pass through to `.format()` after Hijri token substitution.
 
@@ -146,6 +152,7 @@ dayjs('2023-03-23').formatHijri('iYYYY YYYY');
 Construct a Day.js instance from a Hijri date.
 
 **Signature:**
+
 ```ts
 dayjs.fromHijri(
   hy: number,
@@ -157,11 +164,11 @@ dayjs.fromHijri(
 
 **Parameters:**
 
-| Name | Type | Description |
-| --- | --- | --- |
-| `hy` | `number` | Hijri year |
-| `hm` | `number` | Hijri month (1-12) |
-| `hd` | `number` | Hijri day (1-30) |
+| Name            | Type     | Description                           |
+| --------------- | -------- | ------------------------------------- |
+| `hy`            | `number` | Hijri year                            |
+| `hm`            | `number` | Hijri month (1-12)                    |
+| `hd`            | `number` | Hijri day (1-30)                      |
 | `opts.calendar` | `string` | Calendar engine id (default: `'uaq'`) |
 
 **Throws:** `Error` if the Hijri date is invalid or outside the table range.
@@ -180,9 +187,9 @@ dayjs.fromHijri(1444, 9, 1, { calendar: 'fcna' }).format('YYYY-MM-DD');
 
 ```ts
 import type {
-  HijriDate,        // { hy: number, hm: number, hd: number }
+  HijriDate, // { hy: number, hm: number, hd: number }
   ConversionOptions, // { calendar?: string }
-  CalendarSystem,    // string alias for calendar ids
+  CalendarSystem, // string alias for calendar ids
 } from 'dayjs-hijri-plus';
 ```
 

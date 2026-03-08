@@ -87,11 +87,11 @@ The package ships a dual CJS/ESM build via tsup. Both `dayjs` and `hijri-core` a
 
 Output:
 
-| File | Format |
-| --- | --- |
-| `dist/index.cjs` | CommonJS (Node `require`) |
-| `dist/index.mjs` | ESM (`import`) |
-| `dist/index.d.ts` | TypeScript declarations for CJS |
+| File               | Format                          |
+| ------------------ | ------------------------------- |
+| `dist/index.cjs`   | CommonJS (Node `require`)       |
+| `dist/index.mjs`   | ESM (`import`)                  |
+| `dist/index.d.ts`  | TypeScript declarations for CJS |
 | `dist/index.d.mts` | TypeScript declarations for ESM |
 
 ---
