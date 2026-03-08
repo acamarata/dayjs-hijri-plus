@@ -1,13 +1,5 @@
 import type { PluginFunc } from 'dayjs';
-import {
-  toHijri,
-  toGregorian,
-  hmLong,
-  hmMedium,
-  hwLong,
-  hwShort,
-  hwNumeric,
-} from 'hijri-core';
+import { toHijri, toGregorian, hmLong, hmMedium, hwLong, hwShort, hwNumeric } from 'hijri-core';
 import type { ConversionOptions, HijriDate } from './types';
 
 // Augment Day.js to expose plugin methods on the instance type.
@@ -41,7 +33,12 @@ declare module 'dayjs' {
 // because dayjs does not export an IStatic interface for module augmentation.
 // import('dayjs').Dayjs is used explicitly to satisfy the tsup DTS emitter.
 declare module 'dayjs' {
-  function fromHijri(hy: number, hm: number, hd: number, opts?: ConversionOptions): import('dayjs').Dayjs;
+  function fromHijri(
+    hy: number,
+    hm: number,
+    hd: number,
+    opts?: ConversionOptions,
+  ): import('dayjs').Dayjs;
 }
 
 // Hijri-specific format tokens, ordered longest-first to prevent partial matches.
@@ -100,20 +97,33 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
 
     const replaced = formatStr.replace(HIJRI_TOKEN_RE, (token) => {
       switch (token) {
-        case 'iYYYY': return lit(String(hijri.hy).padStart(4, '0'));
-        case 'iYY':   return lit(String(hijri.hy % 100).padStart(2, '0'));
-        case 'iMMMM': return lit(hmLong[hijri.hm - 1]);
-        case 'iMMM':  return lit(hmMedium[hijri.hm - 1]);
-        case 'iMM':   return lit(String(hijri.hm).padStart(2, '0'));
-        case 'iM':    return lit(String(hijri.hm));
-        case 'iDD':   return lit(String(hijri.hd).padStart(2, '0'));
-        case 'iD':    return lit(String(hijri.hd));
-        case 'iEEEE': return lit(hwLong[dow]);
-        case 'iEEE':  return lit(hwShort[dow]);
-        case 'iE':    return lit(String(hwNumeric[dow]));
+        case 'iYYYY':
+          return lit(String(hijri.hy).padStart(4, '0'));
+        case 'iYY':
+          return lit(String(hijri.hy % 100).padStart(2, '0'));
+        case 'iMMMM':
+          return lit(hmLong[hijri.hm - 1]);
+        case 'iMMM':
+          return lit(hmMedium[hijri.hm - 1]);
+        case 'iMM':
+          return lit(String(hijri.hm).padStart(2, '0'));
+        case 'iM':
+          return lit(String(hijri.hm));
+        case 'iDD':
+          return lit(String(hijri.hd).padStart(2, '0'));
+        case 'iD':
+          return lit(String(hijri.hd));
+        case 'iEEEE':
+          return lit(hwLong[dow]);
+        case 'iEEE':
+          return lit(hwShort[dow]);
+        case 'iE':
+          return lit(String(hwNumeric[dow]));
         case 'ioooo':
-        case 'iooo':  return lit('AH');
-        default:      return token;
+        case 'iooo':
+          return lit('AH');
+        default:
+          return token;
       }
     });
 
@@ -156,7 +166,7 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
 export default plugin;
 
 // Re-export hijri-core types for consumers who import from dayjs-hijri-plus.
-export type { HijriDate, ConversionOptions, CalendarSystem } from './types';
+export type { HijriDate, ConversionOptions } from './types';
 export type { CalendarEngine } from 'hijri-core';
 
 // Re-export the registry API so callers can register custom calendar engines

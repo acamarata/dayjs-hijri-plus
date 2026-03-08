@@ -3,12 +3,16 @@ root = true
 [*]
 end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = true
 insert_final_newline = true
+trim_trailing_whitespace = true
 
-[*.{ts,js,mjs,cjs,json,yaml,yml,md}]
+[*.{ts,mts,cts,js,mjs,cjs,json,yaml,yml,md}]
 indent_style = space
 indent_size = 2
+
+[*.{c,h}]
+indent_style = space
+indent_size = 4
 
 [Makefile]
 indent_style = tab
