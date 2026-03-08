@@ -7,7 +7,7 @@ export default defineConfig({
   clean: true,
   outDir: 'dist',
   splitting: false,
-  sourcemap: false,
+  sourcemap: true,
   target: 'es2020',
   platform: 'neutral',
   external: ['dayjs', 'hijri-core'],
