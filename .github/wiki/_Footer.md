@@ -1,0 +1,1 @@
+[dayjs-hijri-plus](https://github.com/acamarata/dayjs-hijri-plus) · MIT License · [npm](https://www.npmjs.com/package/dayjs-hijri-plus) · [Issues](https://github.com/acamarata/dayjs-hijri-plus/issues)
