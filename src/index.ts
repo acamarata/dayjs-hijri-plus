@@ -102,9 +102,12 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
         case 'iYY':
           return lit(String(hijri.hy % 100).padStart(2, '0'));
         case 'iMMMM':
-          return lit(hmLong[hijri.hm - 1]);
+          // Non-null: hijri.hm is a valid Hijri month 1-12; hm-1 is always within hmLong bounds.
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return lit(hmLong[hijri.hm - 1]!);
         case 'iMMM':
-          return lit(hmMedium[hijri.hm - 1]);
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return lit(hmMedium[hijri.hm - 1]!);
         case 'iMM':
           return lit(String(hijri.hm).padStart(2, '0'));
         case 'iM':
@@ -114,11 +117,15 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
         case 'iD':
           return lit(String(hijri.hd));
         case 'iEEEE':
-          return lit(hwLong[dow]);
+          // Non-null: dow is always 0-6 (day of week), within hwLong bounds.
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return lit(hwLong[dow]!);
         case 'iEEE':
-          return lit(hwShort[dow]);
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return lit(hwShort[dow]!);
         case 'iE':
-          return lit(String(hwNumeric[dow]));
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return lit(String(hwNumeric[dow]!));
         case 'ioooo':
         case 'iooo':
           return lit('AH');
