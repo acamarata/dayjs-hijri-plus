@@ -8,7 +8,7 @@
 
 > `const` **default**: `PluginFunc`
 
-Defined in: [src/index.ts:164](https://github.com/acamarata/dayjs-hijri-plus/blob/599c7481510f5ea625b79c98a7030b9c8d90e4f7/src/index.ts#L164)
+Defined in: [src/index.ts:164](https://github.com/acamarata/dayjs-hijri-plus/blob/033ca475760db2b9e4c6edd69cc9dc1f013b8d8f/src/index.ts#L164)
 
 Day.js plugin that adds Hijri calendar support.
 
