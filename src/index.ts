@@ -1,9 +1,9 @@
-import type { PluginFunc } from 'dayjs';
-import { toHijri, toGregorian, hmLong, hmMedium, hwLong, hwShort, hwNumeric } from 'hijri-core';
-import type { ConversionOptions, HijriDate } from './types';
+import type { PluginFunc } from "dayjs";
+import { toHijri, toGregorian, hmLong, hmMedium, hwLong, hwShort, hwNumeric } from "hijri-core";
+import type { ConversionOptions, HijriDate } from "./types";
 
 // Augment Day.js to expose plugin methods on the instance type.
-declare module 'dayjs' {
+declare module "dayjs" {
   interface Dayjs {
     /**
      * Convert the Day.js date to a Hijri date.
@@ -91,7 +91,7 @@ declare module 'dayjs' {
 // Using the function declaration form (same pattern as dayjs timezone plugin)
 // because dayjs does not export an IStatic interface for module augmentation.
 // import('dayjs').Dayjs is used explicitly to satisfy the tsup DTS emitter.
-declare module 'dayjs' {
+declare module "dayjs" {
   /**
    * Construct a Day.js instance from a Hijri date.
    *
@@ -117,7 +117,7 @@ declare module 'dayjs' {
     hm: number,
     hd: number,
     opts?: ConversionOptions,
-  ): import('dayjs').Dayjs;
+  ): import("dayjs").Dayjs;
 }
 
 // Hijri-specific format tokens, ordered longest-first to prevent partial matches.
@@ -138,7 +138,7 @@ const HIJRI_TOKEN_RE = /iYYYY|iYY|iMMMM|iMMM|iMM|iM|iDD|iD|iEEEE|iEEE|iE|ioooo|i
  * @returns The bracket-escaped string.
  */
 function lit(value: string): string {
-  return '[' + value.split(']').join(']][') + ']';
+  return "[" + value.split("]").join("]][") + "]";
 }
 
 /**
@@ -191,7 +191,7 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
     opts?: ConversionOptions,
   ): string {
     const hijri = this.toHijri(opts);
-    if (!hijri) return '';
+    if (!hijri) return "";
 
     // Day.js .day() returns 0 (Sunday) ... 6 (Saturday), matching the index
     // layout of hwLong, hwShort, and hwNumeric from hijri-core.
@@ -199,38 +199,38 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
 
     const replaced = formatStr.replace(HIJRI_TOKEN_RE, (token) => {
       switch (token) {
-        case 'iYYYY':
-          return lit(String(hijri.hy).padStart(4, '0'));
-        case 'iYY':
-          return lit(String(hijri.hy % 100).padStart(2, '0'));
-        case 'iMMMM':
+        case "iYYYY":
+          return lit(String(hijri.hy).padStart(4, "0"));
+        case "iYY":
+          return lit(String(hijri.hy % 100).padStart(2, "0"));
+        case "iMMMM":
           // Non-null: hijri.hm is a valid Hijri month 1-12; hm-1 is always within hmLong bounds.
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return lit(hmLong[hijri.hm - 1]!);
-        case 'iMMM':
+        case "iMMM":
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return lit(hmMedium[hijri.hm - 1]!);
-        case 'iMM':
-          return lit(String(hijri.hm).padStart(2, '0'));
-        case 'iM':
+        case "iMM":
+          return lit(String(hijri.hm).padStart(2, "0"));
+        case "iM":
           return lit(String(hijri.hm));
-        case 'iDD':
-          return lit(String(hijri.hd).padStart(2, '0'));
-        case 'iD':
+        case "iDD":
+          return lit(String(hijri.hd).padStart(2, "0"));
+        case "iD":
           return lit(String(hijri.hd));
-        case 'iEEEE':
+        case "iEEEE":
           // Non-null: dow is always 0-6 (day of week), within hwLong bounds.
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return lit(hwLong[dow]!);
-        case 'iEEE':
+        case "iEEE":
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return lit(hwShort[dow]!);
-        case 'iE':
+        case "iE":
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return lit(String(hwNumeric[dow]!));
-        case 'ioooo':
-        case 'iooo':
-          return lit('AH');
+        case "ioooo":
+        case "iooo":
+          return lit("AH");
         default:
           return token;
       }
@@ -266,8 +266,8 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
     // dayjsFactory(Date) interprets the Date in local time; a UTC-midnight Date
     // in western timezones would resolve to the previous local day.
     const y = greg.getUTCFullYear();
-    const mo = String(greg.getUTCMonth() + 1).padStart(2, '0');
-    const dy = String(greg.getUTCDate()).padStart(2, '0');
+    const mo = String(greg.getUTCMonth() + 1).padStart(2, "0");
+    const dy = String(greg.getUTCDate()).padStart(2, "0");
     return dayjsFactory(`${y}-${mo}-${dy}`);
   };
 };
@@ -278,13 +278,13 @@ export default plugin;
  * Re-exported from hijri-core for consumers who import from dayjs-hijri-plus.
  * Avoids requiring hijri-core as a direct dependency just to use these types.
  */
-export type { HijriDate, ConversionOptions } from './types';
+export type { HijriDate, ConversionOptions } from "./types";
 
 /**
  * Re-exported CalendarEngine interface from hijri-core.
  * Use this type to implement custom calendar engines for `registerCalendar`.
  */
-export type { CalendarEngine } from 'hijri-core';
+export type { CalendarEngine } from "hijri-core";
 
 /**
  * Re-exported registry API from hijri-core.
@@ -296,4 +296,4 @@ export type { CalendarEngine } from 'hijri-core';
  * registerCalendar('my-cal', myEngine);
  * listCalendars(); // ['uaq', 'fcna', 'my-cal']
  */
-export { registerCalendar, getCalendar, listCalendars } from 'hijri-core';
+export { registerCalendar, getCalendar, listCalendars } from "hijri-core";
