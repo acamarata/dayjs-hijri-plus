@@ -6,6 +6,7 @@ dist/
 .claude/
 .env
 .env.*
+coverage/
 
 # AI agent directories
 .cursor/
