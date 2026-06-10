@@ -1,6 +1,6 @@
 {
   "name": "dayjs-hijri-plus",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Day.js plugin for Hijri calendar conversion and formatting. Supports Umm al-Qura and FCNA calendars via hijri-core.",
   "author": "Aric Camarata",
   "license": "MIT",
@@ -70,7 +70,7 @@
     "dayjs": "^1.11.0",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
-    "hijri-core": "^1.0.0",
+    "hijri-core": "^1.0.3",
     "prettier": "^3.8.1",
     "tsup": "^8.0.0",
     "typedoc": "^0.28.19",
