@@ -36,6 +36,12 @@ dayjs.fromHijri(1444, 10, 1).format('YYYY-MM-DD'); // '2023-04-21'
 
 Full API reference, examples, and architecture notes are on the [GitHub Wiki](https://github.com/acamarata/dayjs-hijri-plus/wiki).
 
+## Day boundaries and time zones
+
+`.toHijri()` converts the calendar date the dayjs instance displays — the same date you would read off the screen — regardless of the host's system timezone or whether the dayjs `utc` plugin is active. A call like `dayjs('2025-03-01').toHijri()` always maps the 1st of March 2025, not whatever local instant that string resolves to in UTC.
+
+Religious start-of-day at sunset is out of scope. Sunset-aware day boundaries require external prayer-time data and are not handled here.
+
 ## Related
 
 - [hijri-core](https://github.com/acamarata/hijri-core): the zero-dependency Hijri calendar engine this plugin wraps

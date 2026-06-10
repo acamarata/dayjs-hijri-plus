@@ -59,3 +59,16 @@ describe('CJS: isValidHijri', () => {
     assert.equal(dayjs(D_RAMADAN_1444).isValidHijri(), true);
   });
 });
+
+describe('CJS: UTC-day boundary (regression)', () => {
+  it('dayjs("2025-03-01").toHijri() -> 1 Ramadan 1446', () => {
+    const h = dayjs('2025-03-01').toHijri();
+    assert.deepEqual(h, { hy: 1446, hm: 9, hd: 1 });
+  });
+
+  it('round-trip: fromHijri(1446,9,1) then toHijri() -> {1446,9,1}', () => {
+    const d = dayjs.fromHijri(1446, 9, 1);
+    const h = d.toHijri();
+    assert.deepEqual(h, { hy: 1446, hm: 9, hd: 1 });
+  });
+});

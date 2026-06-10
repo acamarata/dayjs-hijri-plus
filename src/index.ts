@@ -167,7 +167,11 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
   // ------------------------------------------------------------------ //
 
   dayjsClass.prototype.toHijri = function (opts?: ConversionOptions): HijriDate | null {
-    return toHijri(this.toDate(), opts);
+    // Build a UTC-noon Date from the calendar date this instance displays so
+    // that hijri-core's UTC-day contract reads the correct day regardless of
+    // the host timezone or whether the dayjs utc plugin is active.
+    // dayjs .month() is 0-based, matching Date.UTC's month parameter.
+    return toHijri(new Date(Date.UTC(this.year(), this.month(), this.date())), opts);
   };
 
   dayjsClass.prototype.isValidHijri = function (opts?: ConversionOptions): boolean {
@@ -262,9 +266,11 @@ const plugin: PluginFunc = (_option, dayjsClass, dayjsFactory) => {
     if (!greg) {
       throw new Error(`Invalid or out-of-range Hijri date: ${hy}/${hm}/${hd}`);
     }
-    // Construct from ISO date string to avoid timezone offset issues.
-    // dayjsFactory(Date) interprets the Date in local time; a UTC-midnight Date
-    // in western timezones would resolve to the previous local day.
+    // Construct from an ISO date string (YYYY-MM-DD) so the result is the
+    // Gregorian calendar day that corresponds to the Hijri date, at local
+    // midnight in whatever timezone the consumer uses. Passing a raw Date
+    // object to dayjsFactory() would interpret it as a UTC instant and could
+    // land on the previous local day for hosts west of UTC.
     const y = greg.getUTCFullYear();
     const mo = String(greg.getUTCMonth() + 1).padStart(2, "0");
     const dy = String(greg.getUTCDate()).padStart(2, "0");

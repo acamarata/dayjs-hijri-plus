@@ -102,3 +102,18 @@ describe('isValidHijri', () => {
     assert.equal(valid, true);
   });
 });
+
+describe('UTC-day boundary (regression)', () => {
+  // dayjs("YYYY-MM-DD") parses as local midnight — timezone-invariant anchor
+  // for toHijri now that the adapter reads the displayed calendar date.
+  it('dayjs("2025-03-01").toHijri() -> 1 Ramadan 1446', () => {
+    const h = dayjs('2025-03-01').toHijri();
+    assert.deepEqual(h, { hy: 1446, hm: 9, hd: 1 });
+  });
+
+  it('round-trip: fromHijri(1446,9,1) then toHijri() -> {1446,9,1}', () => {
+    const d = dayjs.fromHijri(1446, 9, 1);
+    const h = d.toHijri();
+    assert.deepEqual(h, { hy: 1446, hm: 9, hd: 1 });
+  });
+});
