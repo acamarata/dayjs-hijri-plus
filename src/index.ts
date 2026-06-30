@@ -307,10 +307,8 @@ export { registerCalendar, getCalendar, listCalendars } from "hijri-core";
 // ── Opt-in anonymous telemetry ────────────────────────────────────────────────
 // Off by default. Enable: ACAMARATA_TELEMETRY=1
 // What is sent + how to disable: https://github.com/acamarata/telemetry/blob/main/TELEMETRY.md
-import('@acamarata/telemetry')
-  .then(({ track }) =>
-    track('load', { package: 'dayjs-hijri-plus', version: '1.0.4' }),
-  )
+import("@acamarata/telemetry")
+  .then(({ track }) => track("load", { package: "dayjs-hijri-plus", version: "1.0.4" }))
   .catch(() => {
     // telemetry not installed or disabled — that's fine
   });
